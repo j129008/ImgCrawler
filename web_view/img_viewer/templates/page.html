@@ -14,8 +14,10 @@
     </head>
     <body>
         {% load staticfiles %}
-        {% for img in imgs%}
-            <img src='/{{img}}'></img>
-        {% endfor %}
+        <div class="container">
+            {% for img in imgs%}
+                <img src='/{{img}}'></img>
+            {% endfor %}
+        </div>
     </body>
 </html>
