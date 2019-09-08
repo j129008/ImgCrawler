@@ -1,8 +1,9 @@
 from lib.crawlib.webCraw import Craw
+import sys
 
 base_url = 'http://www.itmtu.com'
 img_type = 'mm'
-img_id = 67496
+img_id = sys.argv[1]
 
 url = '{}/{}/{}/'.format(base_url, img_type, img_id)
 
