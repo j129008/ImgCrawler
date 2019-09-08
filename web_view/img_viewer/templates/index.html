@@ -13,8 +13,10 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     </head>
     <body>
-        {% for folder in folders%}
-            <p><a href='{{folder}}'>{{folder}}</a></p>
-        {% endfor %}
+        <div class="container-fluid">
+            {% for folder in folders%}
+            <a href='{{folder}}'><img style='max-width: 40%;' src='/static/{{folder}}/0001.jpg'></a>
+            {% endfor %}
+        </div>
     </body>
 </html>
