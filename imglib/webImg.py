@@ -11,7 +11,13 @@ class Web:
     def getHtml(self):
         return self.soup.prettify()
 
+    def getImg(self):
+        imgs = self.soup.find_all('img')
+        imgs = [img['src'] for img in imgs]
+
+        return imgs
+
 
 if __name__ == '__main__':
     web = Web('http://www.itmtu.com/mm/35178/4')
-    print(web.getHtml())
+    print(web.getImg())
