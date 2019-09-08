@@ -36,7 +36,10 @@ class Craw:
     def getAllImg(self, path):
         while self.loadNextPage() == True:
             img_url = self.getImg()
-            response = urlopen(img_url)
+            try:
+                response = urlopen(img_url)
+            except:
+                continue
 
             file_name = img_url.split('/')[-1]
             data = response.read()
