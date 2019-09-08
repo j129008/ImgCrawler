@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 
 class Craw:
-    def __init__(self, url=None, next_keyword=None, img_pattern=None, url_pattern='*'):
+    def __init__(self, url=None, next_keyword=None, img_pattern=None, url_pattern='.+'):
         self.url = url
         self.page_now = Web(url)
         self.url_base = re.search(r'^(http(s)?://)?[^/]+', url).group()
