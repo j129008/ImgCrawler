@@ -43,8 +43,3 @@ class Web:
         ]
 
 
-
-
-if __name__ == '__main__':
-    web = Web('http://www.itmtu.com/mm/35178/4')
-    pprint(web.searchLink(r'下一页'))
