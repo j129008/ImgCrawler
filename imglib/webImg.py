@@ -24,9 +24,20 @@ class Web:
             img for img in imgs if re.search(pattern, img) is not None
         ]
 
+    def getLink(self):
+        links = self.soup.find_all('a')
+
+        return [link['href'] for link in links]
+
+    def getRegexLink(self, pattern):
+        links = self.getLink()
+        return [
+            link for link in links if re.search(pattern, link) is not None
+        ]
+
 
 
 
 if __name__ == '__main__':
     web = Web('http://www.itmtu.com/mm/35178/4')
-    print(web.getRegexImg('http://img.itmtu.com/.*.jpg'))
+    print(web.getRegexLink('/mm'))
