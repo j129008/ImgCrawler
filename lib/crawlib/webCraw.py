@@ -5,7 +5,8 @@ import re
 from pathlib import Path
 
 class Craw:
-    def __init__(self, url=None, next_keyword=None, img_pattern=None):
+    def __init__(self, url=None, next_keyword=None, img_pattern=None, url_pattern=None):
+        self.url = url
         self.page_now = Web(url)
         self.url_base = re.search(r'^(http(s)?://)?[^/]+', url).group()
         self.setNextPage(next_keyword)
@@ -17,12 +18,18 @@ class Craw:
     def setImgPattern(self, pattern):
         self.img_pattern = pattern
 
+    def setUrlPattern(self, pattern):
+        self.url_pattern = pattern
+
     def loadNextPage(self):
         next_page = self.page_now.searchLink(self.next_keyword)
         if len(next_page) == 0:
             return False
         next_page = next_page[0]
         next_page = urljoin(self.url_base, next_page)
+        self.url = next_page
+        if re.search(self.url_pattern, next_page) is None:
+            return False
         self.page_now = Web(next_page)
         return True
 
@@ -30,15 +37,15 @@ class Craw:
         img = self.page_now.getRegexImg(self.img_pattern)
         if len(img) == 0:
             return None
-
-        return img[0]
+        img = img[0]
+        print(img)
+        return img
 
     def getAllImg(self, path):
         err_cnt = 0
         file_id = 0
         while self.loadNextPage() == True:
             img_url = self.getImg()
-            print(img_url)
             try:
                 response = urlopen(img_url)
             except:
