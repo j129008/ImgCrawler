@@ -35,6 +35,7 @@ class Craw:
 
     def getAllImg(self, path):
         err_cnt = 0
+        file_id = 0
         while self.loadNextPage() == True:
             img_url = self.getImg()
             print(img_url)
@@ -47,7 +48,8 @@ class Craw:
                 else:
                     continue
 
-            file_name = img_url.split('/')[-1]
+            file_id += 1
+            file_name = '{:04d}'.format(file_id)
             data = response.read()
 
             p = Path(path)
