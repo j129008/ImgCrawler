@@ -12,6 +12,7 @@ class Craw:
         self.setNextPage(next_keyword)
         self.setImgPattern(img_pattern)
         self.url_pattern = url_pattern
+        self.file_id = 0
 
     def setNextPage(self, next_keyword):
         self.next_keyword = next_keyword
@@ -34,6 +35,25 @@ class Craw:
         self.page_now = Web(next_page)
         return True
 
+    def saveAndLoadNext(self, path):
+        img_url = self.getImg()
+        try:
+            response = urlopen(img_url)
+        except:
+            return False
+
+        self.file_id += 1
+        file_name = '{:04d}.jpg'.format(self.file_id)
+        data = response.read()
+
+        p = Path(path)
+        if not p.exists():
+            p.mkdir(exist_ok=True)
+        with open(path + file_name, 'wb') as f:
+            f.write(data)
+
+        return self.loadNextPage()
+
     def getImg(self):
         img = self.page_now.getRegexImg(self.img_pattern)
         if len(img) == 0:
@@ -43,26 +63,6 @@ class Craw:
         return img
 
     def getAllImg(self, path):
-        err_cnt = 0
-        file_id = 0
-        while self.loadNextPage() == True:
-            img_url = self.getImg()
-            try:
-                response = urlopen(img_url)
-            except:
-                err_cnt += 1
-                if err_cnt == 20:
-                    break
-                else:
-                    continue
-
-            file_id += 1
-            file_name = '{:04d}.jpg'.format(file_id)
-            data = response.read()
-
-            p = Path(path)
-            if not p.exists():
-                p.mkdir(exist_ok=True)
-            with open(path + file_name, 'wb') as f:
-                f.write(data)
+        while self.saveAndLoadNext(path):
+            pass
 
