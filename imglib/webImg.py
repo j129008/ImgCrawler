@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import urllib3
+import re
 
 class Web:
     def __init__(self, url):
@@ -17,7 +18,15 @@ class Web:
 
         return imgs
 
+    def getRegexImg(self, pattern):
+        imgs = self.getImg()
+        return [
+            img for img in imgs if re.search(pattern, img) is not None
+        ]
+
+
+
 
 if __name__ == '__main__':
     web = Web('http://www.itmtu.com/mm/35178/4')
-    print(web.getImg())
+    print(web.getRegexImg('http://img.itmtu.com/.*.jpg'))
