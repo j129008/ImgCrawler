@@ -1,6 +1,8 @@
 from ..weblib.webImg import Web
 from urllib.parse import urljoin
+from urllib.request import urlopen
 import re
+from pathlib import Path
 
 class Craw:
     def __init__(self, url=None, next_keyword=None, img_pattern=None):
@@ -31,9 +33,17 @@ class Craw:
 
         return img[0]
 
-    def getAllImg(self):
-        imgs = []
+    def getAllImg(self, folder):
         while self.loadNextPage() == True:
-            img = self.getImg()
-            print(img)
-            imgs.append(img)
+            img_url = self.getImg()
+            response = urlopen(img_url)
+
+            file_name = img_url.split('/')[-1]
+            data = response.read()
+            path = '../../img/' + folder + '/'
+            p = Path(path)
+            if not p.exists():
+                p.mkdir(exist_ok=True)
+            with open(path + file_name, 'wb') as f:
+                f.write(data)
+
