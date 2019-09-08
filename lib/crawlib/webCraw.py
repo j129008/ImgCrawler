@@ -49,10 +49,10 @@ class Craw:
                     continue
 
             file_id += 1
-            file_name = '{:04d}'.format(file_id)
+            file_name = '{:04d}.jpg'.format(file_id)
             data = response.read()
 
-            p = Path(path)
+            p = Path(path + file_name)
             if not p.exists():
                 p.mkdir(exist_ok=True)
             with open(path + file_name, 'wb') as f:
