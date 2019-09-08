@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import urllib3
 import re
+from pprint import pprint
 
 class Web:
     def __init__(self, url):
@@ -35,9 +36,15 @@ class Web:
             link for link in links if re.search(pattern, link) is not None
         ]
 
+    def searchLink(self, pattern):
+        links = self.soup.find_all('a')
+        return [
+            link['href'] for link in links if re.search(pattern, str(link)) is not None
+        ]
+
 
 
 
 if __name__ == '__main__':
     web = Web('http://www.itmtu.com/mm/35178/4')
-    print(web.getRegexLink('/mm'))
+    pprint(web.searchLink(r'下一页'))
