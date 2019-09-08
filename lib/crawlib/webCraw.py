@@ -11,6 +11,7 @@ class Craw:
         self.url_base = re.search(r'^(http(s)?://)?[^/]+', url).group()
         self.setNextPage(next_keyword)
         self.setImgPattern(img_pattern)
+        self.url_pattern = url_pattern
 
     def setNextPage(self, next_keyword):
         self.next_keyword = next_keyword
