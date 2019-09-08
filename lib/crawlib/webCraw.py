@@ -33,14 +33,14 @@ class Craw:
 
         return img[0]
 
-    def getAllImg(self, folder):
+    def getAllImg(self, path):
         while self.loadNextPage() == True:
             img_url = self.getImg()
             response = urlopen(img_url)
 
             file_name = img_url.split('/')[-1]
             data = response.read()
-            path = '../../img/' + folder + '/'
+
             p = Path(path)
             if not p.exists():
                 p.mkdir(exist_ok=True)
