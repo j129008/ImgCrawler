@@ -18,10 +18,10 @@ from django.urls import path
 from django.conf.urls import url
 from index.views import index
 from img_page.views import imgView
+from django.conf import settings
+from django.conf.urls.static import static
 
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    url(r'^$', index),
-    url(r'^(?P<folder>[^/]+)/', imgView, name='imgView'),
-]
+urlpatterns = [url(r'^$', index)]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += [url(r'^(?P<folder>[^/]+)/', imgView, name='imgView')]
