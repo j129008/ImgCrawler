@@ -35,11 +35,21 @@ class Craw:
         self.page_now = Web(next_page)
         return True
 
+
+    def fetch(self, url, max_retry=10):
+        retry = 0
+        while retry < max_retry:
+            try:
+                response = urlopen(img_url)
+                return response.read()
+            except:
+                retry += 1
+        return None
+
     def saveAndLoadNext(self, path):
         img_url = self.getImg()
-        try:
-            response = urlopen(img_url)
-        except:
+        data = self.fetch(img_url)
+        if data is None:
             return False
 
         self.file_id += 1
