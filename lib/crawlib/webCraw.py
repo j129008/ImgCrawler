@@ -40,7 +40,7 @@ class Craw:
         retry = 0
         while retry < max_retry:
             try:
-                response = urlopen(img_url)
+                response = urlopen(url)
                 return response.read()
             except:
                 retry += 1
@@ -54,7 +54,6 @@ class Craw:
 
         self.file_id += 1
         file_name = '{:04d}.jpg'.format(self.file_id)
-        data = response.read()
 
         p = Path(path)
         if not p.exists():
