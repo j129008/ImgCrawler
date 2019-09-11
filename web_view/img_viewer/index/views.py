@@ -3,6 +3,7 @@ from glob import glob
 from .lib.crawlib.webCraw import Craw
 import sys
 import threading
+from django.http import HttpResponseRedirect
 
 
 def fetchImg(img_id):
@@ -23,6 +24,8 @@ def index(request):
         print('img id: {}'.format(img_id))
         thread = threading.Thread(target=fetchImg, args=(img_id, ))
         thread.start()
+        return HttpResponseRedirect(redirect_to='/')
+
     folders = glob('media/*')
     return render_to_response('index.html', {
         'folders': [folder.split('/')[-1] for folder in folders]
