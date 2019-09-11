@@ -15,7 +15,7 @@ def fetchImg(img_id):
     craw = Craw(url, next_keyword='下一页', img_pattern='http://img.itmtu.com/.*.(jpg|png)')
     craw.setUrlPattern(url + '.*')
     folder = img_id
-    path = '/root/ImgCrawler/web_view/img_viewer/media/{}/'.format(folder)
+    path = 'media/{}/'.format(folder)
     imgs = craw.getAllImg(path)
 
 def index(request):
