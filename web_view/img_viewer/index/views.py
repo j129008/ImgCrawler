@@ -4,6 +4,7 @@ from .lib.crawlib.webCraw import Craw
 import sys
 import threading
 from django.http import HttpResponseRedirect
+import re
 
 
 def fetchImg(img_id):
@@ -19,11 +20,13 @@ def fetchImg(img_id):
     imgs = craw.getAllImg(path)
 
 def index(request):
-    if 'img_id' in request.GET:
-        img_id = request.GET['img_id']
-        print('img id: {}'.format(img_id))
-        thread = threading.Thread(target=fetchImg, args=(img_id, ))
-        thread.start()
+    if 'url' in request.GET:
+        url = request.GET['url']
+        m = re.search(r'http://www.itmtu.com/mm/([\d]+).*', url)
+        if m is not None:
+            img_id = m.group(1)
+            thread = threading.Thread(target=fetchImg, args=(img_id, ))
+            thread.start()
         return HttpResponseRedirect(redirect_to='/')
 
     folders = glob('media/*')
