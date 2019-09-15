@@ -46,6 +46,20 @@ class Craw:
                 retry += 1
         return None
 
+    def save(self, path, data):
+        p = Path(path)
+        if not p.exists():
+            p.mkdir(exist_ok=True)
+        with open(path + file_name, 'wb') as f:
+            f.write(data)
+
+    def saveImgList(self, urls):
+        for url in urls:
+            self.file_id += 1
+            file_name = '{:04d}.jpg'.format(self.file_id)
+            self.save(path, data)
+
+
     def saveAndLoadNext(self, path):
         img_url = self.getImg()
         data = self.fetch(img_url)
@@ -54,12 +68,7 @@ class Craw:
 
         self.file_id += 1
         file_name = '{:04d}.jpg'.format(self.file_id)
-
-        p = Path(path)
-        if not p.exists():
-            p.mkdir(exist_ok=True)
-        with open(path + file_name, 'wb') as f:
-            f.write(data)
+        self.save(path, data)
 
         return self.loadNextPage()
 
