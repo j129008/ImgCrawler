@@ -6,9 +6,10 @@ from pprint import pprint
 class Web:
     def __init__(self, url):
         http = urllib3.PoolManager()
-        response = http.request('GET', url)
-        html = response.data
-        self.soup = BeautifulSoup(html, 'html.parser')
+        if url is not None:
+            response = http.request('GET', url)
+            html = response.data
+            self.soup = BeautifulSoup(html, 'html.parser')
 
     def getHtml(self):
         return self.soup.prettify()
