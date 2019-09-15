@@ -13,9 +13,9 @@ class Web:
     def getHtml(self):
         return self.soup.prettify()
 
-    def getImg(self):
+    def getImg(self, src='src'):
         imgs = self.soup.find_all('img')
-        imgs = [img['src'] for img in imgs]
+        imgs = [img[src] for img in imgs]
 
         return imgs
 
