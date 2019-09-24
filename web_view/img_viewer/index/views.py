@@ -13,7 +13,7 @@ def fetchImg(img_id):
 
     url = '{}/{}/{}/'.format(base_url, img_type, img_id)
 
-    craw = Craw(url, next_keyword='下一页', img_pattern=r'((http://img\.itmtu\.com/mm/.*\.(jpg|png))|http://www\.itmtu\.com/wp-content/uploads/\d+/\d+/[0-9\-x]+\.(jpg|png))')
+    craw = Craw(url, next_keyword='下一页', img_pattern=r'((http://img\.itmtu\.com/.*\.(jpg|png))|http://www\.itmtu\.com/wp-content/uploads/\d+/\d+/[0-9\-x]+\.(jpg|png))')
     craw.setUrlPattern(url + '.*')
     folder = img_id
     path = 'media/{}/'.format(folder)
